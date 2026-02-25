@@ -1,7 +1,0 @@
-##fileformat=VCFv4.2
-##source=Assignment_2_Clinical_Genomics
-##reference=GRCh38
-#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
-12	102840493	rs5030858	C	T	.	PASS	.
-7	117587806	rs75527207	G	A	.	PASS	.
-4	1804392	rs28931614	G	A	.	PASS	.
