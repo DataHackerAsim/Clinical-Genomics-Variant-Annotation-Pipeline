@@ -1,4 +1,4 @@
-# 🧬 Clinical Genomics: Variant Annotation Pipeline
+# Clinical Genomics: Variant Annotation Pipeline
 
 ## 📑 Project Overview
 
