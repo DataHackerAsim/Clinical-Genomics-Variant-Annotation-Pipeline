@@ -2,59 +2,97 @@
 
 ## 📑 Project Overview
 
-This repository contains the data, workflow, and results for a clinical genomics variant annotation pipeline. The objective of this project is to simulate a clinical diagnostic workflow by taking raw patient genetic variants (in VCF format) and annotating them with clinical significance, phenotypic traits, and computational pathogenicity scores.
+This repository contains the data, workflow, and results for a clinical genomics variant annotation pipeline. The objective of this project is to simulate a clinical diagnostic workflow by taking raw patient genetic variants (VCF format) and annotating them with clinical significance, phenotypic traits, and computational pathogenicity scores.
 
-This project bridges the gap between raw genomic data (from Whole Exome/Genome Sequencing) and actionable medical insights by utilizing industry-standard genomic databases.
+This project bridges the gap between raw genomic data (Whole Exome/Genome Sequencing) and actionable medical insights by leveraging industry-standard genomic databases.
+
+---
 
 ## 🔬 Clinical Variants Analyzed
 
-The following three pathogenic variants were selected for analysis. They represent different genetic disorders, inheritance patterns, and systemic impacts:
+The following six pathogenic variants (rare and common genetic disorders) were selected for analysis. They represent different inheritance patterns and systemic impacts:
 
-| Disease / Condition | Gene | Variant (Consequence) | dbSNP ID | Inheritance | 
-| ----- | ----- | ----- | ----- | ----- | 
-| **Phenylketonuria (PKU)** | `PAH` | c.1222C>T (p.Arg408Trp) | `rs5030858` | Autosomal Recessive | 
-| **Cystic Fibrosis** | `CFTR` | c.1652G>A (p.Gly551Asp) | `rs75527207` | Autosomal Recessive | 
-| **Achondroplasia** | `FGFR3` | c.1138G>A (p.Gly380Arg) | `rs28931614` | Autosomal Dominant | 
+| Disease / Condition | Gene  | Variant (Consequence) | dbSNP ID | Inheritance |
+|--------------------|-------|------------------------|----------|------------|
+| Phenylketonuria (PKU) | PAH   | c.1222C>T (p.Arg408Trp) | rs5030858 | Autosomal Recessive |
+| Cystic Fibrosis | CFTR  | c.1652G>A (p.Gly551Asp) | rs75527207 | Autosomal Recessive |
+| Achondroplasia | FGFR3 | c.1138G>A (p.Gly380Arg) | rs28931614 | Autosomal Dominant |
+| Sickle Cell Anemia | HBB   | c.20A>T (p.Glu7Val) | rs334 | Autosomal Recessive |
+| Hereditary Hemochromatosis | HFE   | c.845G>A (p.Cys282Tyr) | rs1800562 | Autosomal Recessive |
+| Hereditary Breast Cancer | BRCA1 | c.5095C>T (p.Arg1699Trp) | rs28897696 | Autosomal Dominant |
+
+---
 
 ## 📂 Repository Contents
 
-* 📄 **`assignment_data.xlsx`**: The master data dictionary. Contains all variant details, OMIM phenotypic extraction, ACMG/AMP classifications, and visual proof (screenshots) of computational pathogenicity scores.
+- **assignment_data.xlsx**  
+  Master data dictionary containing:
+  - Variant details  
+  - OMIM phenotypic extraction  
+  - ACMG/AMP classifications  
+  - Screenshots of computational pathogenicity scores  
 
-* 📄 **`patient_variants_raw.vcf`**: The raw Variant Call Format (VCF) file containing the genomic coordinates for the three variants (GRCh38 assembly). This simulates the raw output from a patient's DNA sequencing run.
+- **patient_variants_raw.vcf**  
+  Raw VCF file containing genomic coordinates for the six variants (GRCh38 assembly).  
+  Simulates raw sequencing output.
 
-* 📄 **`patient_variants.vcf`**: The final, annotated VCF file. This file has been cross-referenced with the ClinVar database to append clinical significance directly to the patient's genetic data.
+- **patient_variants.vcf**  
+  Final annotated VCF file cross-referenced with ClinVar to append clinical significance.
+
+---
 
 ## 🛠️ Step-by-Step Reproducibility Guide
 
-*For reviewers and non-bioinformaticians, follow these steps to perfectly reproduce this workflow.*
+This section ensures full reproducibility for reviewers and non-bioinformaticians.
+
+---
 
 ### Step 1: Clinical Data & Phenotype Extraction
 
-1. **ClinVar:** Navigate to the [NCBI ClinVar Database](https://www.ncbi.nlm.nih.gov/clinvar/). Search for each gene/variant to identify the exact molecular consequence, associated conditions, and clinical significance (Pathogenic/Benign).
+**ClinVar**
+1. Navigate to the NCBI ClinVar database.
+2. Search for each gene/variant.
+3. Extract:
+   - Molecular consequence  
+   - Associated conditions  
+   - Clinical significance (Pathogenic/Benign)
 
-2. **OMIM:** Navigate to the [Online Mendelian Inheritance in Man (OMIM)](https://www.omim.org/) database. Search the gene name, navigate to the "Allelic Variants" section, and extract the specific phenotypic traits observed in patients with this exact mutation.
+**OMIM**
+1. Navigate to the OMIM database.
+2. Search the gene name.
+3. Go to the **"Allelic Variants"** section.
+4. Extract phenotypic traits associated with the exact mutation.
+
+---
 
 ### Step 2: Computational Pathogenicity Scoring
 
-To predict how damaging a mutation is to a protein's structure and function, we extract AI-driven scores using the **UCSC Genome Browser**.
+To predict functional impact, AI-driven scores were extracted using the UCSC Genome Browser.
 
-1. Navigate to the [UCSC Genome Browser (Assembly: Human GRCh38/hg38)](https://genome.ucsc.edu/cgi-bin/hgGateway).
+1. Navigate to UCSC Genome Browser (Assembly: Human GRCh38/hg38).
+2. Search variants using dbSNP identifiers:
+   - rs5030858  
+   - rs75527207  
+   - rs28931614  
+   - rs334  
+   - rs1800562  
+   - rs28897696  
 
-2. Search for the variants using their specific dbSNP identifiers (`rs5030858`, `rs75527207`, `rs28931614`) to ensure exact coordinate targeting.
+3. Enable the following tracks (set to **Full**):
+   - AlphaMissense (under Phenotype and Literature)
+   - REVEL (under Variation)
 
-3. Scroll down to the track controls and enable the following tracks to `full`:
+4. Hover over the color-coded variant blocks to extract exact computational scores.
 
-   * **AlphaMissense** (under *Phenotype and Literature*)
+> Screenshots of extracted scores are archived in `assignment_data.xlsx`.
 
-   * **REVEL** (under *Variation*)
-
-4. **Data Extraction:** Hover over the color-coded blocks aligned with the mutated allele to reveal the exact computational scores. *(Note: Screenshots of these scores are archived in the provided Excel file).*
+---
 
 ### Step 3: VCF Generation
 
-A standard `VCFv4.2` file was manually constructed using the GRCh38 genomic coordinates identified in the previous steps.
+A standard **VCFv4.2** file was manually constructed using GRCh38 coordinates:
 
-```text
+```vcf
 ##fileformat=VCFv4.2
 ##source=Assignment_2_Clinical_Genomics
 ##reference=GRCh38
@@ -62,24 +100,6 @@ A standard `VCFv4.2` file was manually constructed using the GRCh38 genomic coor
 12	102840493	rs5030858	C	T	.	PASS	.
 7	117587806	rs75527207	G	A	.	PASS	.
 4	1804392	rs28931614	G	A	.	PASS	.
-```
-### Step 4: Variant Annotation (ClinVar Integration)
-
-*⚠️ **Methodology Note:** The NCBI Variation Reporter web interface has been deprecated by the NIH. To ensure robust, modern, and reproducible annotation without requiring local Linux command-line environments, this pipeline utilizes the industry-standard Ensembl Variant Effect Predictor (VEP).*
-
-1. Navigate to the [Ensembl VEP Web Tool (Human GRCh38)](https://www.ensembl.org/Homo_sapiens/Tools/VEP).
-2. Upload the `patient_variants_raw.vcf` file.
-3. Under **Additional Annotations**, enable the `Phenotypes and/or disease/trait data` setting. This specifically commands the tool to cross-reference the uploaded variants against the ClinVar database.
-4. Execute the tool and export the resulting annotated VCF file as `patient_variants.vcf`.
-
----
-
-## 🧰 Databases & Resources Used
-
-* **[ClinVar (NCBI)](https://www.ncbi.nlm.nih.gov/clinvar/)**: Aggregates information about genomic variation and its relationship to human health.
-* **[OMIM](https://www.omim.org/)**: Comprehensive compendium of human genes and genetic phenotypes.
-* **[UCSC Genome Browser](https://genome.ucsc.edu/)**: Interactive viewer for genomic data, used here for AlphaMissense and REVEL deep-learning pathogenicity models.
-* **[Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)**: Analyzes, annotates, and prioritizes genomic variants.
-
----
-*Disclaimer: This repository is for academic simulation and educational purposes only. It is not intended for actual medical diagnosis or clinical use.*
+11	5227002	rs334	T	A	.	PASS	.
+6	26093141	rs1800562	G	A	.	PASS	.
+17	43070967	rs28897696	C	T	.	PASS	.
