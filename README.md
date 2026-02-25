@@ -1,4 +1,4 @@
-# Clinical Genomics: Variant Annotation Pipeline
+# 🧬 Clinical Genomics: Variant Annotation Pipeline
 
 ## 📑 Project Overview
 
@@ -62,24 +62,24 @@ A standard `VCFv4.2` file was manually constructed using the GRCh38 genomic coor
 12	102840493	rs5030858	C	T	.	PASS	.
 7	117587806	rs75527207	G	A	.	PASS	.
 4	1804392	rs28931614	G	A	.	PASS	.
-Step 4: Variant Annotation (ClinVar Integration)
-⚠️ Methodology Note: The NCBI Variation Reporter web interface has been deprecated by the NIH. To ensure robust, modern, and reproducible annotation without requiring local Linux command-line environments, this pipeline utilizes the industry-standard Ensembl Variant Effect Predictor (VEP).
+```
+### Step 4: Variant Annotation (ClinVar Integration)
 
-Navigate to the Ensembl VEP Web Tool (Human GRCh38).
+*⚠️ **Methodology Note:** The NCBI Variation Reporter web interface has been deprecated by the NIH. To ensure robust, modern, and reproducible annotation without requiring local Linux command-line environments, this pipeline utilizes the industry-standard Ensembl Variant Effect Predictor (VEP).*
 
-Upload the patient_variants_raw.vcf file.
+1. Navigate to the [Ensembl VEP Web Tool (Human GRCh38)](https://www.ensembl.org/Homo_sapiens/Tools/VEP).
+2. Upload the `patient_variants_raw.vcf` file.
+3. Under **Additional Annotations**, enable the `Phenotypes and/or disease/trait data` setting. This specifically commands the tool to cross-reference the uploaded variants against the ClinVar database.
+4. Execute the tool and export the resulting annotated VCF file as `patient_variants.vcf`.
 
-Under Additional Annotations, enable the Phenotypes and/or disease/trait data setting. This specifically commands the tool to cross-reference the uploaded variants against the ClinVar database.
+---
 
-Execute the tool and export the resulting annotated VCF file.
+## 🧰 Databases & Resources Used
 
-🧰 Databases & Resources Used
-ClinVar (NCBI): Aggregates information about genomic variation and its relationship to human health.
+* **[ClinVar (NCBI)](https://www.ncbi.nlm.nih.gov/clinvar/)**: Aggregates information about genomic variation and its relationship to human health.
+* **[OMIM](https://www.omim.org/)**: Comprehensive compendium of human genes and genetic phenotypes.
+* **[UCSC Genome Browser](https://genome.ucsc.edu/)**: Interactive viewer for genomic data, used here for AlphaMissense and REVEL deep-learning pathogenicity models.
+* **[Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)**: Analyzes, annotates, and prioritizes genomic variants.
 
-OMIM: Comprehensive compendium of human genes and genetic phenotypes.
-
-UCSC Genome Browser: Interactive viewer for genomic data, used here for AlphaMissense and REVEL deep-learning pathogenicity models.
-
-Ensembl VEP: Analyzes, annotates, and prioritizes genomic variants.
-
-Disclaimer: This repository is for academic simulation and educational purposes only. It is not intended for actual medical diagnosis or clinical use
+---
+*Disclaimer: This repository is for academic simulation and educational purposes only. It is not intended for actual medical diagnosis or clinical use.*
