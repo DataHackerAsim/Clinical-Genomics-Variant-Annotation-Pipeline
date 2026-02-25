@@ -1,93 +1,60 @@
-🧬 Clinical Genomics: Variant Annotation Pipeline
+# 🧬 Clinical Genomics: Variant Annotation Pipeline
 
-📑 Project Overview
+## 📑 Project Overview
 
 This repository contains the data, workflow, and results for a clinical genomics variant annotation pipeline. The objective of this project is to simulate a clinical diagnostic workflow by taking raw patient genetic variants (in VCF format) and annotating them with clinical significance, phenotypic traits, and computational pathogenicity scores.
 
 This project bridges the gap between raw genomic data (from Whole Exome/Genome Sequencing) and actionable medical insights by utilizing industry-standard genomic databases.
 
-🔬 Clinical Variants Analyzed
+## 🔬 Clinical Variants Analyzed
 
 The following three pathogenic variants were selected for analysis. They represent different genetic disorders, inheritance patterns, and systemic impacts:
 
-Disease / Condition
+| Disease / Condition | Gene | Variant (Consequence) | dbSNP ID | Inheritance | 
+| ----- | ----- | ----- | ----- | ----- | 
+| **Phenylketonuria (PKU)** | `PAH` | c.1222C>T (p.Arg408Trp) | `rs5030858` | Autosomal Recessive | 
+| **Cystic Fibrosis** | `CFTR` | c.1652G>A (p.Gly551Asp) | `rs75527207` | Autosomal Recessive | 
+| **Achondroplasia** | `FGFR3` | c.1138G>A (p.Gly380Arg) | `rs28931614` | Autosomal Dominant | 
 
-Gene
+## 📂 Repository Contents
 
-Variant (Consequence)
+* 📄 **`assignment_data.xlsx`**: The master data dictionary. Contains all variant details, OMIM phenotypic extraction, ACMG/AMP classifications, and visual proof (screenshots) of computational pathogenicity scores.
 
-dbSNP ID
+* 📄 **`patient_variants_raw.vcf`**: The raw Variant Call Format (VCF) file containing the genomic coordinates for the three variants (GRCh38 assembly). This simulates the raw output from a patient's DNA sequencing run.
 
-Inheritance
+* 📄 **`patient_variants.vcf`**: The final, annotated VCF file. This file has been cross-referenced with the ClinVar database to append clinical significance directly to the patient's genetic data.
 
-Phenylketonuria (PKU)
+## 🛠️ Step-by-Step Reproducibility Guide
 
-PAH
+*For reviewers and non-bioinformaticians, follow these steps to perfectly reproduce this workflow.*
 
-c.1222C>T (p.Arg408Trp)
+### Step 1: Clinical Data & Phenotype Extraction
 
-rs5030858
+1. **ClinVar:** Navigate to the [NCBI ClinVar Database](https://www.ncbi.nlm.nih.gov/clinvar/). Search for each gene/variant to identify the exact molecular consequence, associated conditions, and clinical significance (Pathogenic/Benign).
 
-Autosomal Recessive
+2. **OMIM:** Navigate to the [Online Mendelian Inheritance in Man (OMIM)](https://www.omim.org/) database. Search the gene name, navigate to the "Allelic Variants" section, and extract the specific phenotypic traits observed in patients with this exact mutation.
 
-Cystic Fibrosis
+### Step 2: Computational Pathogenicity Scoring
 
-CFTR
+To predict how damaging a mutation is to a protein's structure and function, we extract AI-driven scores using the **UCSC Genome Browser**.
 
-c.1652G>A (p.Gly551Asp)
+1. Navigate to the [UCSC Genome Browser (Assembly: Human GRCh38/hg38)](https://genome.ucsc.edu/cgi-bin/hgGateway).
 
-rs75527207
+2. Search for the variants using their specific dbSNP identifiers (`rs5030858`, `rs75527207`, `rs28931614`) to ensure exact coordinate targeting.
 
-Autosomal Recessive
+3. Scroll down to the track controls and enable the following tracks to `full`:
 
-Achondroplasia
+   * **AlphaMissense** (under *Phenotype and Literature*)
 
-FGFR3
+   * **REVEL** (under *Variation*)
 
-c.1138G>A (p.Gly380Arg)
+4. **Data Extraction:** Hover over the color-coded blocks aligned with the mutated allele to reveal the exact computational scores. *(Note: Screenshots of these scores are archived in the provided Excel file).*
 
-rs28931614
+### Step 3: VCF Generation
 
-Autosomal Dominant
+A standard `VCFv4.2` file was manually constructed using the GRCh38 genomic coordinates identified in the previous steps.
 
-📂 Repository Contents
-
-📄 assignment_data.xlsx: The master data dictionary. Contains all variant details, OMIM phenotypic extraction, ACMG/AMP classifications, and visual proof (screenshots) of computational pathogenicity scores.
-
-📄 patient_variants_raw.vcf: The raw Variant Call Format (VCF) file containing the genomic coordinates for the three variants (GRCh38 assembly). This simulates the raw output from a patient's DNA sequencing run.
-
-📄 patient_variants.vcf: The final, annotated VCF file. This file has been cross-referenced with the ClinVar database to append clinical significance directly to the patient's genetic data.
-
-🛠️ Step-by-Step Reproducibility Guide
-
-For reviewers and non-bioinformaticians, follow these steps to perfectly reproduce this workflow.
-
-Step 1: Clinical Data & Phenotype Extraction
-
-ClinVar: Navigate to the NCBI ClinVar Database. Search for each gene/variant to identify the exact molecular consequence, associated conditions, and clinical significance (Pathogenic/Benign).
-
-OMIM: Navigate to the Online Mendelian Inheritance in Man (OMIM) database. Search the gene name, navigate to the "Allelic Variants" section, and extract the specific phenotypic traits observed in patients with this exact mutation.
-
-Step 2: Computational Pathogenicity Scoring
-
-To predict how damaging a mutation is to a protein's structure and function, we extract AI-driven scores using the UCSC Genome Browser.
-
-Navigate to the UCSC Genome Browser (Assembly: Human GRCh38/hg38).
-
-Search for the variants using their specific dbSNP identifiers (rs5030858, rs75527207, rs28931614) to ensure exact coordinate targeting.
-
-Scroll down to the track controls and enable the following tracks to full:
-
-AlphaMissense (under Phenotype and Literature)
-
-REVEL (under Variation)
-
-Data Extraction: Hover over the color-coded blocks aligned with the mutated allele to reveal the exact computational scores. (Note: Screenshots of these scores are archived in the provided Excel file).
-
-Step 3: VCF Generation
-
-A standard VCFv4.2 file was manually constructed using the GRCh38 genomic coordinates identified in the previous steps.
-
+```text
 ##fileformat=VCFv4.2
 ##source=Assignment_2_Clinical_Genomics
 ##reference=GRCh38
@@ -95,11 +62,7 @@ A standard VCFv4.2 file was manually constructed using the GRCh38 genomic coordi
 12	102840493	rs5030858	C	T	.	PASS	.
 7	117587806	rs75527207	G	A	.	PASS	.
 4	1804392	rs28931614	G	A	.	PASS	.
-
-
-
 Step 4: Variant Annotation (ClinVar Integration)
-
 ⚠️ Methodology Note: The NCBI Variation Reporter web interface has been deprecated by the NIH. To ensure robust, modern, and reproducible annotation without requiring local Linux command-line environments, this pipeline utilizes the industry-standard Ensembl Variant Effect Predictor (VEP).
 
 Navigate to the Ensembl VEP Web Tool (Human GRCh38).
@@ -111,7 +74,6 @@ Under Additional Annotations, enable the Phenotypes and/or disease/trait data se
 Execute the tool and export the resulting annotated VCF file.
 
 🧰 Databases & Resources Used
-
 ClinVar (NCBI): Aggregates information about genomic variation and its relationship to human health.
 
 OMIM: Comprehensive compendium of human genes and genetic phenotypes.
@@ -120,4 +82,4 @@ UCSC Genome Browser: Interactive viewer for genomic data, used here for AlphaMis
 
 Ensembl VEP: Analyzes, annotates, and prioritizes genomic variants.
 
-Disclaimer: This repository is for academic simulation and educational purposes only. It is not intended for actual medical diagnosis or clinical use.
+Disclaimer: This repository is for academic simulation and educational purposes only. It is not intended for actual medical diagnosis or clinical use
